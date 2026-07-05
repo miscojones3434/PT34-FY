@@ -12,12 +12,10 @@
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: #ffffff; color: #000000; padding-bottom: 140px; overflow-x: hidden; }
     
-    /* Vistas */
     .view { display: none; padding-bottom: 20px; animation: fadeIn 0.2s ease; }
     .view.active { display: block; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-    /* Cabecera Superior */
     .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #ffffff; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #f0f0f0; }
     .logo-container { background: #000; color: #b388ff; padding: 5px 10px; border-radius: 4px; font-weight: 900; font-style: italic; letter-spacing: 1px; }
     .top-actions { display: flex; align-items: center; gap: 15px; }
@@ -25,7 +23,6 @@
     .btn-icon { background: #1a1a2e; color: #fff; width: 32px; height: 32px; border-radius: 6px; display: flex; justify-content: center; align-items: center; font-size: 16px; }
     .top-actions .fa-cog { font-size: 20px; color: #333; }
 
-    /* Contenedores de Secciones (Scroll Horizontal) */
     .section { margin-top: 25px; padding-left: 20px; }
     .section-header { display: flex; justify-content: space-between; align-items: flex-end; padding-right: 20px; margin-bottom: 15px; }
     .section-title { font-size: 20px; font-weight: 700; color: #000; }
@@ -34,25 +31,21 @@
     .scroll-row { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 10px; padding-right: 20px; scrollbar-width: none; }
     .scroll-row::-webkit-scrollbar { display: none; }
     
-    /* Tarjetas de Música */
     .card { min-width: 150px; width: 150px; display: flex; flex-direction: column; cursor: pointer; }
     .card-img-wrapper { position: relative; width: 150px; height: 150px; margin-bottom: 10px; }
     .card-img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; background-color: #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
     .card-img.artist { border-radius: 50%; }
     
-    /* Botones encima de la carátula */
     .card-badges { position: absolute; bottom: 8px; right: 8px; display: flex; flex-direction: column; gap: 5px; }
     .badge-btn { width: 28px; height: 28px; background: #ffffff; border-radius: 6px; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); color: #000; font-size: 12px; }
     
     .card-title { font-size: 15px; font-weight: 600; color: #000; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .card-subtitle { font-size: 13px; color: #666; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; }
 
-    /* Vista de Búsqueda */
     .search-container { padding: 20px; }
     .search-box { position: relative; width: 100%; margin-bottom: 20px; }
     .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #666; font-size: 18px; }
     .search-input { width: 100%; padding: 14px 14px 14px 45px; border-radius: 10px; border: 1px solid #ddd; background-color: #f9f9f9; color: #000; font-size: 16px; font-weight: 500; outline: none; }
-    .search-input:focus { border-color: #000; }
     
     .track-list { display: flex; flex-direction: column; gap: 15px; }
     .track-item { display: flex; align-items: center; justify-content: space-between; cursor: pointer; background: #fff; padding: 10px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
@@ -62,7 +55,6 @@
     .track-title { font-size: 15px; font-weight: 600; color: #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .track-artist { font-size: 13px; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     
-    /* Reproductor Mini Flotante (Blanco) */
     .player-dock { position: fixed; bottom: 70px; left: 10px; right: 10px; background-color: #ffffff; border-radius: 12px; display: flex; align-items: center; padding: 10px 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); border: 1px solid #f0f0f0; z-index: 20; transition: transform 0.3s ease; }
     .player-dock.hidden { transform: translateY(200%); }
     .player-dock-info-area { display: flex; align-items: center; flex: 1; overflow: hidden; cursor: pointer; }
@@ -75,7 +67,6 @@
     .progress-bar-container { position: absolute; bottom: 0; left: 15px; right: 15px; height: 3px; background-color: #f0f0f0; border-radius: 2px; overflow: hidden; }
     .progress-bar-fill { height: 100%; width: 0%; background-color: #000; }
 
-    /* Barra de Navegación Inferior (Blanca) */
     .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background-color: #ffffff; display: flex; justify-content: space-around; align-items: center; z-index: 10; border-top: 1px solid #eee; padding-bottom: env(safe-area-inset-bottom); }
     .nav-item { display: flex; flex-direction: column; align-items: center; color: #999; font-size: 11px; gap: 5px; cursor: pointer; font-weight: 500; }
     .nav-item.active { color: #000; }
@@ -87,7 +78,6 @@
 </head>
 <body>
 
-  <!-- CABECERA FIJA -->
   <div class="top-bar">
     <div class="logo-container">PT34</div>
     <div class="top-actions">
@@ -97,153 +87,101 @@
     </div>
   </div>
 
-  <!-- VISTA INICIO -->
   <div id="view-home" class="view active">
     
-    <!-- Recién reproducido -->
     <div class="section">
-      <div class="section-header">
-        <h2 class="section-title">Recién reproducido</h2>
-      </div>
+      <div class="section-header"><h2 class="section-title">Recién reproducido</h2></div>
       <div class="scroll-row">
         <div class="card" onclick="buscarDirecto('Mago de Oz Malicia')">
           <div class="card-img-wrapper">
-            <img src="https://i.scdn.co/image/ab67616d0000b273b0a7019dc92b95c0c9b0e26d" class="card-img">
-            <div class="card-badges">
-              <div class="badge-btn"><i class="fas fa-plus"></i></div>
-              <div class="badge-btn"><i class="fas fa-play"></i></div>
-            </div>
+            <img src="https://wsrv.nl/?url=https://i.scdn.co/image/ab67616d0000b273b0a7019dc92b95c0c9b0e26d" class="card-img">
+            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
           </div>
-          <div class="card-title">Malicia</div>
-          <div class="card-subtitle">album • Mägo de Oz</div>
+          <div class="card-title">Malicia</div><div class="card-subtitle">album • Mägo de Oz</div>
         </div>
         <div class="card" onclick="buscarDirecto('Rosalia LUX')">
           <div class="card-img-wrapper">
-            <img src="https://i.scdn.co/image/ab67616d0000b2734f3b7ab4c7da6f015bdceef4" class="card-img">
-            <div class="card-badges">
-              <div class="badge-btn"><i class="fas fa-plus"></i></div>
-              <div class="badge-btn"><i class="fas fa-play"></i></div>
-            </div>
+            <img src="https://wsrv.nl/?url=https://i.scdn.co/image/ab67616d0000b2734f3b7ab4c7da6f015bdceef4" class="card-img">
+            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
           </div>
-          <div class="card-title">LUX</div>
-          <div class="card-subtitle">album • ROSALÍA</div>
+          <div class="card-title">LUX</div><div class="card-subtitle">album • ROSALÍA</div>
         </div>
       </div>
     </div>
 
-    <!-- Popular radio -->
     <div class="section">
-      <div class="section-header">
-        <h2 class="section-title">Popular radio</h2>
-        <span class="explore-btn">Explorar todo</span>
-      </div>
+      <div class="section-header"><h2 class="section-title">Popular radio</h2><span class="explore-btn">Explorar todo</span></div>
       <div class="scroll-row">
         <div class="card" onclick="buscarDirecto('Viva Suecia')">
           <div class="card-img-wrapper">
-            <img src="https://seed-mix-image.spotifycdn.com/v6/img/artist/6P2T3wL9z5kC1QZl2w1Z1F/es/default" class="card-img">
-            <div class="card-badges">
-              <div class="badge-btn"><i class="fas fa-plus"></i></div>
-              <div class="badge-btn"><i class="fas fa-play"></i></div>
-            </div>
+            <img src="https://wsrv.nl/?url=https://seed-mix-image.spotifycdn.com/v6/img/artist/6P2T3wL9z5kC1QZl2w1Z1F/es/default" class="card-img">
+            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
           </div>
-          <div class="card-title">Viva Suecia Radio</div>
-          <div class="card-subtitle">With Lori Meyers, Arde Bogotá, IZAL and more</div>
+          <div class="card-title">Viva Suecia Radio</div><div class="card-subtitle">With Lori Meyers, Arde Bogotá, IZAL and more</div>
         </div>
         <div class="card" onclick="buscarDirecto('La Oreja de Van Gogh')">
           <div class="card-img-wrapper">
-            <img src="https://seed-mix-image.spotifycdn.com/v6/img/artist/4X9NqXXp12E1B9OOSjF16S/es/default" class="card-img">
-            <div class="card-badges">
-              <div class="badge-btn"><i class="fas fa-plus"></i></div>
-              <div class="badge-btn"><i class="fas fa-play"></i></div>
-            </div>
+            <img src="https://wsrv.nl/?url=https://seed-mix-image.spotifycdn.com/v6/img/artist/4X9NqXXp12E1B9OOSjF16S/es/default" class="card-img">
+            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
           </div>
-          <div class="card-title">La Oreja de Van Gogh...</div>
-          <div class="card-subtitle">With Juanes, Carlos Baute, Mecano and more</div>
+          <div class="card-title">La Oreja de Van Gogh...</div><div class="card-subtitle">With Juanes, Carlos Baute, Mecano and more</div>
         </div>
       </div>
     </div>
 
-    <!-- Featured Charts -->
     <div class="section">
-      <div class="section-header">
-        <h2 class="section-title">Featured Charts</h2>
-        <span class="explore-btn">Explorar todo</span>
-      </div>
+      <div class="section-header"><h2 class="section-title">Featured Charts</h2><span class="explore-btn">Explorar todo</span></div>
       <div class="scroll-row">
         <div class="card" onclick="buscarDirecto('Top 50 España')">
           <div class="card-img-wrapper">
-            <img src="https://charts-images.scdn.co/assets/locale_en/regional/daily/region_es_default.jpg" class="card-img">
-            <div class="card-badges">
-              <div class="badge-btn"><i class="fas fa-plus"></i></div>
-              <div class="badge-btn"><i class="fas fa-play"></i></div>
-            </div>
+            <img src="https://wsrv.nl/?url=https://charts-images.scdn.co/assets/locale_en/regional/daily/region_es_default.jpg" class="card-img">
+            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
           </div>
-          <div class="card-title">Top 50: España</div>
-          <div class="card-subtitle">Tu actualización diaria de las canciones más escuc...</div>
+          <div class="card-title">Top 50: España</div><div class="card-subtitle">Tu actualización diaria de las canciones más escuc...</div>
         </div>
         <div class="card" onclick="buscarDirecto('Top Global')">
           <div class="card-img-wrapper">
-            <img src="https://charts-images.scdn.co/assets/locale_en/regional/weekly/region_global_default.jpg" class="card-img">
-            <div class="card-badges">
-              <div class="badge-btn"><i class="fas fa-plus"></i></div>
-              <div class="badge-btn"><i class="fas fa-play"></i></div>
-            </div>
+            <img src="https://wsrv.nl/?url=https://charts-images.scdn.co/assets/locale_en/regional/weekly/region_global_default.jpg" class="card-img">
+            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
           </div>
-          <div class="card-title">Canciones más escu...</div>
-          <div class="card-subtitle">Lista Semanal de Exitos globales</div>
+          <div class="card-title">Canciones más escu...</div><div class="card-subtitle">Lista Semanal de Exitos globales</div>
         </div>
       </div>
     </div>
 
-    <!-- Recommended for you -->
     <div class="section">
-      <div class="section-header">
-        <h2 class="section-title">Recommended for you</h2>
-        <span class="explore-btn">Explorar todo</span>
-      </div>
+      <div class="section-header"><h2 class="section-title">Recommended for you</h2><span class="explore-btn">Explorar todo</span></div>
       <div class="scroll-row">
         <div class="card" onclick="buscarDirecto('Jazz Tranquilo')">
           <div class="card-img-wrapper">
-            <img src="https://i.scdn.co/image/ab67706f0000000350d534f5904de22e0350616b" class="card-img">
-            <div class="card-badges">
-              <div class="badge-btn"><i class="fas fa-plus"></i></div>
-              <div class="badge-btn"><i class="fas fa-play"></i></div>
-            </div>
+            <img src="https://wsrv.nl/?url=https://i.scdn.co/image/ab67706f0000000350d534f5904de22e0350616b" class="card-img">
+            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
           </div>
-          <div class="card-title">Jazz Tranquilo</div>
-          <div class="card-subtitle">Dulce jazz ideal para estudiar o relajarse.</div>
+          <div class="card-title">Jazz Tranquilo</div><div class="card-subtitle">Dulce jazz ideal para estudiar o relajarse.</div>
         </div>
         <div class="card" onclick="buscarDirecto('Chill Out Music')">
           <div class="card-img-wrapper">
-            <img src="https://i.scdn.co/image/ab67706f0000000311cbdb060c5ea1887e2aa584" class="card-img">
-            <div class="card-badges">
-              <div class="badge-btn"><i class="fas fa-plus"></i></div>
-              <div class="badge-btn"><i class="fas fa-play"></i></div>
-            </div>
+            <img src="https://wsrv.nl/?url=https://i.scdn.co/image/ab67706f0000000311cbdb060c5ea1887e2aa584" class="card-img">
+            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
           </div>
-          <div class="card-title">Chill Out Music</div>
-          <div class="card-subtitle">The ultimate chill out playlist.</div>
+          <div class="card-title">Chill Out Music</div><div class="card-subtitle">The ultimate chill out playlist.</div>
         </div>
       </div>
     </div>
 
-    <!-- Popular artists -->
     <div class="section">
-      <div class="section-header">
-        <h2 class="section-title">Popular artists</h2>
-        <span class="explore-btn">Explorar todo</span>
-      </div>
+      <div class="section-header"><h2 class="section-title">Popular artists</h2><span class="explore-btn">Explorar todo</span></div>
       <div class="scroll-row">
         <div class="card" onclick="buscarDirecto('Beele')">
           <div class="card-img-wrapper">
-            <img src="https://i.scdn.co/image/ab6761610000e5ebb6f4df2798e9adcc996c9c64" class="card-img artist">
+            <img src="https://wsrv.nl/?url=https://i.scdn.co/image/ab6761610000e5ebb6f4df2798e9adcc996c9c64" class="card-img artist">
           </div>
           <div class="card-title" style="text-align:center;">Beéle</div>
           <div class="card-subtitle" style="text-align:center; background:#f0f0f0; border-radius:4px; padding:2px; margin-top:5px; font-weight:bold; font-size:10px;">ARTISTA</div>
         </div>
         <div class="card" onclick="buscarDirecto('Karol G')">
           <div class="card-img-wrapper">
-            <img src="https://i.scdn.co/image/ab6761610000e5eb1e3d64cc15a317454e3f42ac" class="card-img artist">
+            <img src="https://wsrv.nl/?url=https://i.scdn.co/image/ab6761610000e5eb1e3d64cc15a317454e3f42ac" class="card-img artist">
           </div>
           <div class="card-title" style="text-align:center;">KAROL G</div>
           <div class="card-subtitle" style="text-align:center; background:#f0f0f0; border-radius:4px; padding:2px; margin-top:5px; font-weight:bold; font-size:10px;">ARTISTA</div>
@@ -252,19 +190,17 @@
     </div>
   </div>
 
-  <!-- VISTA BUSCAR -->
   <div id="view-search" class="view">
     <div class="search-container">
       <div class="search-box">
         <i class="fas fa-search"></i>
-        <input type="text" class="search-input" id="searchInput" placeholder="Buscar canciones, artistas o podcasts..." onkeypress="if(event.key==='Enter') searchMusic()">
+        <input type="text" class="search-input" id="searchInput" placeholder="Buscar canciones o artistas..." onkeypress="if(event.key==='Enter') searchMusic()">
       </div>
       <div class="loader" id="loader"></div>
       <div class="track-list" id="trackList"></div>
     </div>
   </div>
 
-  <!-- MINI REPRODUCTOR BLANCO -->
   <div class="player-dock hidden" id="playerDock">
     <div class="player-dock-info-area">
       <img src="" class="player-dock-img" id="dockImg">
@@ -281,33 +217,53 @@
     <div class="progress-bar-container"><div class="progress-bar-fill" id="dockProgress"></div></div>
   </div>
 
-  <!-- NAVEGACIÓN INFERIOR BLANCA -->
   <div class="bottom-nav">
-    <div class="nav-item active" onclick="switchView('home')">
-      <i class="fas fa-home"></i>
-    </div>
-    <div class="nav-item" onclick="switchView('search')">
-      <i class="fas fa-search"></i>
-    </div>
-    <div class="nav-item">
-      <i class="fas fa-book"></i>
-    </div>
-    <div class="nav-item">
-      <i class="fas fa-chart-bar"></i>
-    </div>
+    <div class="nav-item active" onclick="switchView('home')"><i class="fas fa-home"></i></div>
+    <div class="nav-item" onclick="switchView('search')"><i class="fas fa-search"></i></div>
+    <div class="nav-item"><i class="fas fa-book"></i></div>
+    <div class="nav-item"><i class="fas fa-chart-bar"></i></div>
   </div>
 
-  <!-- MOTOR DE AUDIO -->
   <audio id="audioEngine"></audio>
 
   <script>
-    // NUEVA API MÁS ESTABLE
-    const API_BASE = 'https://pipedapi.smnz.de';
     const audio = document.getElementById('audioEngine');
-    
     const dock = document.getElementById('playerDock');
     const dockPlay = document.getElementById('dockPlayBtn');
     const dockProgress = document.getElementById('dockProgress');
+
+    // SISTEMA DE RULETA RUSA (Anticaídas)
+    const PIPED_SERVERS = [
+      'https://pipedapi.kavin.rocks',
+      'https://pipedapi.adminforge.de',
+      'https://pipedapi.smnz.de',
+      'https://piped-api.garudalinux.org',
+      'https://pipedapi.r4fo.com'
+    ];
+    let workingServer = PIPED_SERVERS[0];
+
+    async function fetchBlindado(ruta) {
+      // Intentamos con el servidor que sabemos que funcionaba la última vez
+      try {
+        const res = await fetch(workingServer + ruta);
+        if (res.ok) return await res.json();
+      } catch (e) {}
+
+      // Si falla, recorremos todos los servidores hasta que uno conteste
+      for (let server of PIPED_SERVERS) {
+        if (server === workingServer) continue;
+        try {
+          const res = await fetch(server + ruta);
+          if (res.ok) {
+            workingServer = server; // Guardamos el servidor bueno para la próxima
+            return await res.json();
+          }
+        } catch (e) {
+          console.log(`El servidor ${server} está muerto. Saltando al siguiente...`);
+        }
+      }
+      throw new Error('Todos los servidores caídos.');
+    }
 
     function switchView(viewName) {
       document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
@@ -326,10 +282,7 @@
     }
 
     audio.addEventListener('timeupdate', () => {
-      if (audio.duration) {
-        const pct = (audio.currentTime / audio.duration) * 100;
-        dockProgress.style.width = pct + '%';
-      }
+      if (audio.duration) dockProgress.style.width = ((audio.currentTime / audio.duration) * 100) + '%';
     });
 
     function togglePlay(e) {
@@ -337,8 +290,8 @@
       audio.paused ? audio.play() : audio.pause();
     }
 
-    audio.addEventListener('play', () => { dockPlay.className = 'fas fa-pause'; });
-    audio.addEventListener('pause', () => { dockPlay.className = 'fas fa-play'; });
+    audio.addEventListener('play', () => dockPlay.className = 'fas fa-pause');
+    audio.addEventListener('pause', () => dockPlay.className = 'fas fa-play');
 
     async function searchMusic() {
       const q = document.getElementById('searchInput').value;
@@ -348,8 +301,8 @@
       document.getElementById('trackList').innerHTML = '';
 
       try {
-        const res = await fetch(`${API_BASE}/search?q=${encodeURIComponent(q)}&filter=music_songs`);
-        const data = await res.json();
+        // Usamos el sistema blindado para buscar
+        const data = await fetchBlindado(`/search?q=${encodeURIComponent(q)}&filter=music_songs`);
         document.getElementById('loader').style.display = 'none';
         
         data.items.forEach(item => {
@@ -370,7 +323,7 @@
         });
       } catch (err) {
         document.getElementById('loader').style.display = 'none';
-        document.getElementById('trackList').innerHTML = '<p style="text-align:center; color:red; padding:20px;">Error al conectar con la nueva API. Intenta de nuevo.</p>';
+        document.getElementById('trackList').innerHTML = '<p style="text-align:center; color:red; padding:20px;">Los servidores de YouTube están caídos ahora mismo. Intenta en un rato.</p>';
       }
     }
 
@@ -378,21 +331,19 @@
       document.getElementById('dockTitle').textContent = title;
       document.getElementById('dockArtist').textContent = artist;
       document.getElementById('dockImg').src = thumb;
-      
       dock.classList.remove('hidden');
       dockPlay.className = 'fas fa-spinner fa-spin';
 
       try {
-        const res = await fetch(`${API_BASE}/streams/${id}`);
-        const data = await res.json();
+        // Usamos el sistema blindado para sacar el audio
+        const data = await fetchBlindado(`/streams/${id}`);
         const stream = data.audioStreams.find(s => s.mimeType.includes('mp4')) || data.audioStreams[0];
-        
         if (stream) {
           audio.src = stream.url;
           audio.play();
         }
       } catch (err) {
-        alert('Fallo al extraer el audio.');
+        alert('Fallo al extraer el audio. Prueba con otra canción.');
         dockPlay.className = 'fas fa-play';
       }
     }
