@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.json">
+  <title>PT34-FY</title>
+</head>
+<body style="background:#121212; color:white; font-family:sans-serif; text-align:center;">
+  <h1>PT34-FY</h1>
+  <input type="text" id="q" placeholder="Buscar música..." style="padding:10px; width:80%; border-radius:20px;">
+  <button onclick="search()" style="padding:10px 20px; background:#1db954; border:none; border-radius:20px; margin-top:10px;">Buscar</button>
+  <div id="res"></div>
+  <audio id="a" controls style="position:fixed; bottom:20px; left:5%; width:90%"></audio>
+  <script>
+    async function search() {
+      const q = document.getElementById('q').value;
+      const res = await fetch(`https://pipedapi.kavin.rocks/search?q=${q}&filter=music_songs`);
+      const data = await res.json();
+      document.getElementById('res').innerHTML = data.items.map(i => `<p onclick="play('${i.url.split('v=')[1]}')" style="cursor:pointer; border-bottom:1px solid #333; padding:10px;">${i.title}</p>`).join('');
+    }
+    async function play(id) {
+      const res = await fetch(`https://pipedapi.kavin.rocks/streams/${id}`);
+      const data = await res.json();
+      document.getElementById('a').src = data.audioStreams[0].url;
+      document.getElementById('a').play();
+    }
+    if('serviceWorker' in navigator) navigator.serviceWorker.register('sw.js');
+  </script>
+</body>
+</html>
