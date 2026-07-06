@@ -3,303 +3,1301 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <link rel="manifest" href="manifest.json">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <title>Megazor PT34</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+  <title>PT34 Music</title>
+
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background-color: #ffffff; color: #000000; padding-bottom: 140px; overflow-x: hidden; }
-    
-    .view { display: none; padding-bottom: 20px; animation: fadeIn 0.2s ease; }
-    .view.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #ffffff; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #f0f0f0; }
-    .logo-container { background: #000; color: #b388ff; padding: 5px 10px; border-radius: 4px; font-weight: 900; font-style: italic; letter-spacing: 1px; }
-    .top-actions { display: flex; align-items: center; gap: 15px; }
-    .btn-device { background: #f0f0f0; padding: 6px 12px; border-radius: 15px; font-size: 12px; font-weight: 600; color: #333; }
-    .btn-icon { background: #1a1a2e; color: #fff; width: 32px; height: 32px; border-radius: 6px; display: flex; justify-content: center; align-items: center; font-size: 16px; }
-    .top-actions .fa-cog { font-size: 20px; color: #333; }
+    :root {
+      --purple: #b388ff;
+      --black: #000000;
+      --text-soft: #696969;
+      --line: #ededed;
+      --nav-height: 68px;
+    }
 
-    .section { margin-top: 25px; padding-left: 20px; }
-    .section-header { display: flex; justify-content: space-between; align-items: flex-end; padding-right: 20px; margin-bottom: 15px; }
-    .section-title { font-size: 20px; font-weight: 700; color: #000; }
-    .explore-btn { font-size: 13px; color: #5c5c70; font-weight: 600; }
-    
-    .scroll-row { display: flex; overflow-x: auto; gap: 15px; padding-bottom: 10px; padding-right: 20px; scrollbar-width: none; }
-    .scroll-row::-webkit-scrollbar { display: none; }
-    
-    .card { min-width: 150px; width: 150px; display: flex; flex-direction: column; cursor: pointer; }
-    .card-img-wrapper { position: relative; width: 150px; height: 150px; margin-bottom: 10px; }
-    .card-img { width: 100%; height: 100%; object-fit: cover; border-radius: 10px; background-color: #e0e0e0; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .card-img.artist { border-radius: 50%; }
-    
-    .card-badges { position: absolute; bottom: 8px; right: 8px; display: flex; flex-direction: column; gap: 5px; }
-    .badge-btn { width: 28px; height: 28px; background: #ffffff; border-radius: 6px; display: flex; justify-content: center; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); color: #000; font-size: 12px; }
-    
-    .card-title { font-size: 15px; font-weight: 600; color: #000; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .card-subtitle { font-size: 13px; color: #666; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.3; }
+    body {
+      background: #ffffff;
+      color: #000000;
+      overflow-x: hidden;
+      padding-bottom: 150px;
+    }
 
-    .search-container { padding: 20px; }
-    .search-box { position: relative; width: 100%; margin-bottom: 20px; }
-    .search-box i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #666; font-size: 18px; }
-    .search-input { width: 100%; padding: 14px 14px 14px 45px; border-radius: 10px; border: 1px solid #ddd; background-color: #f9f9f9; color: #000; font-size: 16px; font-weight: 500; outline: none; }
-    
-    .track-list { display: flex; flex-direction: column; gap: 15px; }
-    .track-item { display: flex; align-items: center; justify-content: space-between; cursor: pointer; background: #fff; padding: 10px; border-radius: 10px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .track-item-left { display: flex; align-items: center; gap: 14px; flex: 1; overflow: hidden; }
-    .track-img { width: 50px; height: 50px; border-radius: 6px; object-fit: cover; }
-    .track-info { display: flex; flex-direction: column; overflow: hidden; }
-    .track-title { font-size: 15px; font-weight: 600; color: #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .track-artist { font-size: 13px; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    
-    .player-dock { position: fixed; bottom: 70px; left: 10px; right: 10px; background-color: #ffffff; border-radius: 12px; display: flex; align-items: center; padding: 10px 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.15); border: 1px solid #f0f0f0; z-index: 20; transition: transform 0.3s ease; }
-    .player-dock.hidden { transform: translateY(200%); }
-    .player-dock-info-area { display: flex; align-items: center; flex: 1; overflow: hidden; cursor: pointer; }
-    .player-dock-img { width: 42px; height: 42px; border-radius: 6px; object-fit: cover; margin-right: 12px; }
-    .player-dock-text { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
-    .player-dock-title { font-size: 14px; font-weight: 700; color: #000; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .player-dock-artist { font-size: 12px; color: #666; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .player-dock-controls { display: flex; align-items: center; gap: 20px; color: #000; font-size: 20px; padding-left: 10px; }
-    
-    .progress-bar-container { position: absolute; bottom: 0; left: 15px; right: 15px; height: 3px; background-color: #f0f0f0; border-radius: 2px; overflow: hidden; }
-    .progress-bar-fill { height: 100%; width: 0%; background-color: #000; transition: width 0.1s linear; }
+    button,
+    input {
+      font: inherit;
+    }
 
-    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 60px; background-color: #ffffff; display: flex; justify-content: space-around; align-items: center; z-index: 10; border-top: 1px solid #eee; padding-bottom: env(safe-area-inset-bottom); }
-    .nav-item { display: flex; flex-direction: column; align-items: center; color: #999; font-size: 11px; gap: 5px; cursor: pointer; font-weight: 500; }
-    .nav-item.active { color: #000; }
-    .nav-item i { font-size: 22px; }
+    button {
+      border: 0;
+      cursor: pointer;
+    }
 
-    .loader { display: none; margin: 40px auto; width: 35px; height: 35px; border: 3px solid #f3f3f3; border-top: 3px solid #000; border-radius: 50%; animation: spin 1s linear infinite; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .view {
+      display: none;
+      min-height: calc(100vh - 70px);
+      padding-bottom: 20px;
+      animation: fadeIn .18s ease;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .top-bar {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      background: rgba(255,255,255,.97);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .logo-container {
+      background: #050505;
+      color: var(--purple);
+      padding: 8px 13px;
+      border-radius: 5px;
+      font-weight: 900;
+      font-size: 20px;
+      font-style: italic;
+      letter-spacing: 1px;
+      box-shadow: 0 2px 8px rgba(0,0,0,.12);
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .btn-device {
+      background: #f1f1f1;
+      color: #333;
+      border-radius: 20px;
+      padding: 9px 14px;
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .btn-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 7px;
+      background: #17172c;
+      color: #ffffff;
+      display: grid;
+      place-items: center;
+      font-size: 19px;
+    }
+
+    .btn-settings {
+      background: transparent;
+      color: #303030;
+      font-size: 23px;
+      padding: 4px;
+    }
+
+    .section {
+      margin-top: 30px;
+      padding-left: 20px;
+    }
+
+    .section-header {
+      padding-right: 20px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 15px;
+    }
+
+    .section-title {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: -.7px;
+    }
+
+    .explore-btn {
+      background: transparent;
+      color: #5a5a68;
+      font-weight: 700;
+      font-size: 15px;
+      white-space: nowrap;
+      padding: 4px;
+    }
+
+    .scroll-row {
+      display: flex;
+      gap: 15px;
+      overflow-x: auto;
+      padding-right: 20px;
+      padding-bottom: 12px;
+      scrollbar-width: none;
+    }
+
+    .scroll-row::-webkit-scrollbar {
+      display: none;
+    }
+
+    .card {
+      width: 150px;
+      min-width: 150px;
+      position: relative;
+    }
+
+    .card-cover {
+      display: block;
+      position: relative;
+      width: 150px;
+      height: 150px;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #ececec;
+      box-shadow: 0 4px 14px rgba(0,0,0,.12);
+    }
+
+    .card-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-badges {
+      position: absolute;
+      bottom: 8px;
+      right: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .badge-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 9px;
+      background: #ffffff;
+      color: #000000;
+      display: grid;
+      place-items: center;
+      font-size: 17px;
+      box-shadow: 0 3px 9px rgba(0,0,0,.22);
+    }
+
+    .badge-btn:active,
+    .nav-item:active,
+    .track-item:active {
+      transform: scale(.96);
+    }
+
+    .card-title {
+      margin-top: 11px;
+      font-size: 17px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .card-subtitle {
+      margin-top: 4px;
+      color: var(--text-soft);
+      font-size: 14px;
+      line-height: 1.3;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .search-container,
+    .library-container {
+      padding: 20px;
+    }
+
+    .search-box {
+      position: relative;
+      margin-bottom: 18px;
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 17px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #626262;
+      font-size: 22px;
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      min-height: 62px;
+      padding: 15px 18px 15px 52px;
+      border: 1px solid #d9d9d9;
+      border-radius: 14px;
+      background: #fafafa;
+      color: #000;
+      font-size: 18px;
+      font-weight: 700;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: #a885ef;
+      box-shadow: 0 0 0 3px rgba(179,136,255,.15);
+    }
+
+    .search-help,
+    .empty-state,
+    .status-message {
+      text-align: center;
+      color: #777;
+      padding: 35px 15px;
+      line-height: 1.45;
+      font-size: 16px;
+    }
+
+    .status-message.error {
+      color: #d42020;
+      font-weight: 700;
+    }
+
+    .loader {
+      display: none;
+      width: 36px;
+      height: 36px;
+      margin: 30px auto;
+      border: 4px solid #eeeeee;
+      border-top-color: #000000;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .track-list {
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+    }
+
+    .track-item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 10px;
+      text-align: left;
+      background: #ffffff;
+      border-radius: 13px;
+      border: 1px solid #f1f1f1;
+      box-shadow: 0 2px 8px rgba(0,0,0,.05);
+    }
+
+    .track-item.playing {
+      border-color: #b388ff;
+      background: #fcfaff;
+    }
+
+    .track-item-left {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .track-img {
+      width: 58px;
+      height: 58px;
+      object-fit: cover;
+      flex: 0 0 auto;
+      border-radius: 9px;
+      background: #eeeeee;
+    }
+
+    .track-info {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .track-title {
+      color: #000;
+      font-size: 16px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .track-artist {
+      color: #666;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .track-play-icon {
+      color: #000;
+      font-size: 25px;
+      padding: 8px;
+    }
+
+    .player-dock {
+      position: fixed;
+      z-index: 50;
+      left: 10px;
+      right: 10px;
+      bottom: calc(var(--nav-height) + 8px);
+      min-height: 66px;
+      padding: 10px 13px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #ffffff;
+      border: 1px solid #eeeeee;
+      border-radius: 14px;
+      box-shadow: 0 7px 24px rgba(0,0,0,.18);
+      transition: transform .28s ease, opacity .28s ease;
+    }
+
+    .player-dock.hidden {
+      transform: translateY(170%);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .player-dock-info-area {
+      display: flex;
+      align-items: center;
+      min-width: 0;
+      flex: 1;
+      cursor: pointer;
+    }
+
+    .player-dock-img {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-right: 11px;
+      background: #eeeeee;
+    }
+
+    .player-dock-text {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+
+    .player-dock-title {
+      color: #000;
+      font-size: 14px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .player-dock-artist {
+      color: #666;
+      font-size: 12px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .player-dock-controls {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      color: #000;
+    }
+
+    .dock-control {
+      background: transparent;
+      color: #000;
+      font-size: 18px;
+      min-width: 25px;
+      min-height: 34px;
+    }
+
+    .dock-control.play {
+      font-size: 21px;
+    }
+
+    .progress-bar-container {
+      position: absolute;
+      left: 13px;
+      right: 13px;
+      bottom: 0;
+      height: 3px;
+      background: #ececec;
+      overflow: hidden;
+      border-radius: 10px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 0%;
+      background: #000000;
+      transition: width .12s linear;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      z-index: 45;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: var(--nav-height);
+      padding-bottom: env(safe-area-inset-bottom);
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      background: rgba(255,255,255,.98);
+      border-top: 1px solid #eeeeee;
+    }
+
+    .nav-item {
+      background: transparent;
+      min-width: 58px;
+      color: #9a9a9a;
+      font-size: 24px;
+      padding: 9px;
+    }
+
+    .nav-item.active {
+      color: #000000;
+    }
+
+    .favorite-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 14px;
+      border: 1px solid #eeeeee;
+      border-radius: 13px;
+      margin-bottom: 10px;
+      background: #fff;
+    }
+
+    .favorite-name {
+      min-width: 0;
+      color: #000;
+      font-size: 16px;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .favorite-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .small-action {
+      background: #f2f2f2;
+      color: #000;
+      border-radius: 8px;
+      min-width: 38px;
+      min-height: 38px;
+      font-size: 16px;
+    }
+
+    .toast {
+      position: fixed;
+      z-index: 100;
+      left: 50%;
+      bottom: 155px;
+      transform: translate(-50%, 25px);
+      max-width: calc(100vw - 40px);
+      padding: 11px 15px;
+      border-radius: 12px;
+      background: rgba(0,0,0,.9);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      text-align: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease, transform .25s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
   </style>
 </head>
+
 <body>
 
-  <div class="top-bar">
+  <header class="top-bar">
     <div class="logo-container">PT34</div>
+
     <div class="top-actions">
-      <span class="btn-device">Dispositivos</span>
-      <div class="btn-icon"><i class="fas fa-camera"></i></div>
-      <i class="fas fa-cog"></i>
+      <button class="btn-device" id="deviceBtn" type="button">Dispositivos</button>
+      <button class="btn-icon" id="cameraBtn" type="button" aria-label="Cámara">
+        <i class="fa-solid fa-camera"></i>
+      </button>
+      <button class="btn-settings" id="settingsBtn" type="button" aria-label="Ajustes">
+        <i class="fa-solid fa-gear"></i>
+      </button>
     </div>
-  </div>
+  </header>
 
-  <div id="view-home" class="view active">
-    
-    <div class="section">
-      <div class="section-header"><h2 class="section-title">Recién reproducido</h2></div>
-      <div class="scroll-row">
-        <div class="card" onclick="buscarDirecto('Mago de Oz Malicia')">
-          <div class="card-img-wrapper">
-            <img src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/07/26/df/0726dfe7-30dd-36f9-0361-b5167fc7eebf/cover.jpg/500x500bb.jpg" class="card-img">
-            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
-          </div>
-          <div class="card-title">Malicia</div><div class="card-subtitle">album • Mägo de Oz</div>
+  <main>
+
+    <section id="view-home" class="view active">
+
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">Recién reproducido</h2>
         </div>
-        <div class="card" onclick="buscarDirecto('Rosalia LUX')">
-          <div class="card-img-wrapper">
-            <img src="https://is1-ssl.mzstatic.com/image/thumb/Music112/v4/01/a5/cb/01a5cb1b-e555-52b0-9f5b-9d6fb5876008/196589000000.jpg/500x500bb.jpg" class="card-img">
-            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
-          </div>
-          <div class="card-title">LUX</div><div class="card-subtitle">album • ROSALÍA</div>
+
+        <div class="scroll-row">
+
+          <article class="card" data-query="Mägo de Oz Malicia">
+            <div class="card-cover">
+              <img class="static-art" alt="Malicia">
+              <div class="card-badges">
+                <button class="badge-btn add-favorite-btn" type="button" aria-label="Añadir Malicia">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+                <button class="badge-btn search-card-btn" type="button" aria-label="Buscar Malicia">
+                  <i class="fa-solid fa-play"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-title">Malicia</div>
+            <div class="card-subtitle">Álbum · Mägo de Oz</div>
+          </article>
+
+          <article class="card" data-query="Rosalía LUX">
+            <div class="card-cover">
+              <img class="static-art" alt="LUX">
+              <div class="card-badges">
+                <button class="badge-btn add-favorite-btn" type="button" aria-label="Añadir LUX">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+                <button class="badge-btn search-card-btn" type="button" aria-label="Buscar LUX">
+                  <i class="fa-solid fa-play"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-title">LUX</div>
+            <div class="card-subtitle">Álbum · ROSALÍA</div>
+          </article>
+
         </div>
       </div>
-    </div>
 
-    <div class="section">
-      <div class="section-header"><h2 class="section-title">Popular radio</h2><span class="explore-btn">Explorar todo</span></div>
-      <div class="scroll-row">
-        <div class="card" onclick="buscarDirecto('Viva Suecia')">
-          <div class="card-img-wrapper">
-            <img src="https://is1-ssl.mzstatic.com/image/thumb/Music122/v4/10/d4/0b/10d40bf3-4b91-18d5-1b22-8356f9175440/190296200000.jpg/500x500bb.jpg" class="card-img">
-            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
-          </div>
-          <div class="card-title">Viva Suecia Radio</div><div class="card-subtitle">With Lori Meyers, Arde Bogotá, IZAL and more</div>
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">Popular radio</h2>
+          <button class="explore-btn" type="button" data-explore="Viva Suecia">Explorar todo</button>
         </div>
-        <div class="card" onclick="buscarDirecto('La Oreja de Van Gogh')">
-          <div class="card-img-wrapper">
-            <img src="https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/73/0e/db/730edb89-a2e6-764f-4d92-261543b59363/886448800000.jpg/500x500bb.jpg" class="card-img">
-            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
-          </div>
-          <div class="card-title">La Oreja de Van Gogh...</div><div class="card-subtitle">With Juanes, Carlos Baute, Mecano and more</div>
+
+        <div class="scroll-row">
+
+          <article class="card" data-query="Viva Suecia">
+            <div class="card-cover">
+              <img class="static-art" alt="Viva Suecia Radio">
+              <div class="card-badges">
+                <button class="badge-btn add-favorite-btn" type="button" aria-label="Añadir Viva Suecia">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+                <button class="badge-btn search-card-btn" type="button" aria-label="Buscar Viva Suecia">
+                  <i class="fa-solid fa-play"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-title">Viva Suecia Radio</div>
+            <div class="card-subtitle">Lori Meyers, Arde Bogotá, IZAL y más</div>
+          </article>
+
+          <article class="card" data-query="La Oreja de Van Gogh">
+            <div class="card-cover">
+              <img class="static-art" alt="La Oreja de Van Gogh">
+              <div class="card-badges">
+                <button class="badge-btn add-favorite-btn" type="button" aria-label="Añadir La Oreja de Van Gogh">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+                <button class="badge-btn search-card-btn" type="button" aria-label="Buscar La Oreja de Van Gogh">
+                  <i class="fa-solid fa-play"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-title">La Oreja de Van Gogh</div>
+            <div class="card-subtitle">Juanes, Carlos Baute, Mecano y más</div>
+          </article>
+
         </div>
       </div>
-    </div>
 
-    <div class="section">
-      <div class="section-header"><h2 class="section-title">Featured Charts</h2><span class="explore-btn">Explorar todo</span></div>
-      <div class="scroll-row">
-        <div class="card" onclick="buscarDirecto('Top 50 España')">
-          <div class="card-img-wrapper">
-            <img src="https://is1-ssl.mzstatic.com/image/thumb/Features125/v4/71/34/00/7134005b-800d-5197-09f4-7e052ba119f6/mza_10000000000000000000.png/500x500bb.png" class="card-img">
-            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
-          </div>
-          <div class="card-title">Top 50: España</div><div class="card-subtitle">Tu actualización diaria de las canciones más escuc...</div>
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">Featured Charts</h2>
+          <button class="explore-btn" type="button" data-explore="Top canciones España">Explorar todo</button>
         </div>
-        <div class="card" onclick="buscarDirecto('Top Global')">
-          <div class="card-img-wrapper">
-            <img src="https://is1-ssl.mzstatic.com/image/thumb/Features115/v4/5f/88/00/5f880024-516d-8e6d-0000-000000000000/mza_10000000000000000000.png/500x500bb.png" class="card-img">
-            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
-          </div>
-          <div class="card-title">Canciones más escu...</div><div class="card-subtitle">Lista Semanal de Exitos globales</div>
+
+        <div class="scroll-row">
+
+          <article class="card" data-query="Top canciones España">
+            <div class="card-cover">
+              <img class="static-art" alt="Top 50 España">
+              <div class="card-badges">
+                <button class="badge-btn add-favorite-btn" type="button" aria-label="Añadir Top 50 España">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+                <button class="badge-btn search-card-btn" type="button" aria-label="Buscar Top 50 España">
+                  <i class="fa-solid fa-play"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-title">Top canciones España</div>
+            <div class="card-subtitle">Canciones populares del momento</div>
+          </article>
+
+          <article class="card" data-query="Top Global">
+            <div class="card-cover">
+              <img class="static-art" alt="Top Global">
+              <div class="card-badges">
+                <button class="badge-btn add-favorite-btn" type="button" aria-label="Añadir Top Global">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+                <button class="badge-btn search-card-btn" type="button" aria-label="Buscar Top Global">
+                  <i class="fa-solid fa-play"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-title">Top Global</div>
+            <div class="card-subtitle">Éxitos internacionales</div>
+          </article>
+
         </div>
       </div>
-    </div>
 
-    <div class="section">
-      <div class="section-header"><h2 class="section-title">Recommended for you</h2><span class="explore-btn">Explorar todo</span></div>
-      <div class="scroll-row">
-        <div class="card" onclick="buscarDirecto('Jazz Tranquilo')">
-          <div class="card-img-wrapper">
-            <img src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/aa/5b/72/aa5b721e-1215-680f-90b9-000000000000/cover.jpg/500x500bb.jpg" class="card-img">
-            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
-          </div>
-          <div class="card-title">Jazz Tranquilo</div><div class="card-subtitle">Dulce jazz ideal para estudiar o relajarse.</div>
+    </section>
+
+    <section id="view-search" class="view">
+      <div class="search-container">
+        <div class="search-box">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input
+            id="searchInput"
+            class="search-input"
+            type="search"
+            autocomplete="off"
+            placeholder="Buscar canciones..."
+          >
         </div>
-        <div class="card" onclick="buscarDirecto('Chill Out Music')">
-          <div class="card-img-wrapper">
-            <img src="https://is1-ssl.mzstatic.com/image/thumb/Music115/v4/21/92/0b/21920b72-7201-9877-9000-000000000000/cover.jpg/500x500bb.jpg" class="card-img">
-            <div class="card-badges"><div class="badge-btn"><i class="fas fa-plus"></i></div><div class="badge-btn"><i class="fas fa-play"></i></div></div>
-          </div>
-          <div class="card-title">Chill Out Music</div><div class="card-subtitle">The ultimate chill out playlist.</div>
+
+        <div id="searchHelp" class="search-help">
+          Busca por canción, álbum o artista.
+        </div>
+
+        <div id="loader" class="loader"></div>
+        <div id="trackList" class="track-list"></div>
+      </div>
+    </section>
+
+    <section id="view-library" class="view">
+      <div class="library-container">
+        <h2 class="section-title" style="margin-bottom:20px;">Favoritos</h2>
+        <div id="favoriteList"></div>
+      </div>
+    </section>
+
+    <section id="view-charts" class="view">
+      <div class="section">
+        <div class="section-header">
+          <h2 class="section-title">Charts</h2>
+        </div>
+
+        <div class="scroll-row">
+          <article class="card" data-query="Top canciones España">
+            <div class="card-cover">
+              <img class="static-art" alt="España">
+              <div class="card-badges">
+                <button class="badge-btn search-card-btn" type="button">
+                  <i class="fa-solid fa-play"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-title">España</div>
+            <div class="card-subtitle">Canciones más buscadas</div>
+          </article>
+
+          <article class="card" data-query="Top Global">
+            <div class="card-cover">
+              <img class="static-art" alt="Global">
+              <div class="card-badges">
+                <button class="badge-btn search-card-btn" type="button">
+                  <i class="fa-solid fa-play"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-title">Global</div>
+            <div class="card-subtitle">Éxitos internacionales</div>
+          </article>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <div id="view-search" class="view">
-    <div class="search-container">
-      <div class="search-box">
-        <i class="fas fa-search"></i>
-        <input type="text" class="search-input" id="searchInput" placeholder="Buscar canciones..." onkeypress="if(event.key==='Enter') searchMusic()">
-      </div>
-      <div class="loader" id="loader"></div>
-      <div class="track-list" id="trackList"></div>
-    </div>
-  </div>
+  </main>
 
-  <div class="player-dock hidden" id="playerDock">
-    <div class="player-dock-info-area">
-      <img src="" class="player-dock-img" id="dockImg">
+  <section id="playerDock" class="player-dock hidden">
+    <div id="playerInfo" class="player-dock-info-area">
+      <img id="dockImg" class="player-dock-img" alt="Portada">
       <div class="player-dock-text">
-        <div class="player-dock-title" id="dockTitle">Título</div>
-        <div class="player-dock-artist" id="dockArtist">Artista</div>
+        <div id="dockTitle" class="player-dock-title">Sin reproducción</div>
+        <div id="dockArtist" class="player-dock-artist">PT34 Music</div>
       </div>
     </div>
+
     <div class="player-dock-controls">
-      <i class="fas fa-step-backward"></i>
-      <i class="fas fa-play" id="dockPlayBtn" onclick="togglePlay(event)"></i>
-      <i class="fas fa-step-forward"></i>
+      <button id="prevBtn" class="dock-control" type="button" aria-label="Anterior">
+        <i class="fa-solid fa-backward-step"></i>
+      </button>
+
+      <button id="dockPlayBtn" class="dock-control play" type="button" aria-label="Reproducir">
+        <i class="fa-solid fa-play"></i>
+      </button>
+
+      <button id="nextBtn" class="dock-control" type="button" aria-label="Siguiente">
+        <i class="fa-solid fa-forward-step"></i>
+      </button>
     </div>
-    <div class="progress-bar-container"><div class="progress-bar-fill" id="dockProgress"></div></div>
-  </div>
 
-  <div class="bottom-nav">
-    <div class="nav-item active" onclick="switchView('home')"><i class="fas fa-home"></i></div>
-    <div class="nav-item" onclick="switchView('search')"><i class="fas fa-search"></i></div>
-    <div class="nav-item"><i class="fas fa-book"></i></div>
-    <div class="nav-item"><i class="fas fa-chart-bar"></i></div>
-  </div>
+    <div class="progress-bar-container">
+      <div id="dockProgress" class="progress-bar-fill"></div>
+    </div>
+  </section>
 
-  <audio id="audioEngine"></audio>
+  <nav class="bottom-nav">
+    <button class="nav-item active" type="button" data-view="home" aria-label="Inicio">
+      <i class="fa-solid fa-house"></i>
+    </button>
+
+    <button class="nav-item" type="button" data-view="search" aria-label="Buscar">
+      <i class="fa-solid fa-magnifying-glass"></i>
+    </button>
+
+    <button class="nav-item" type="button" data-view="library" aria-label="Favoritos">
+      <i class="fa-solid fa-book"></i>
+    </button>
+
+    <button class="nav-item" type="button" data-view="charts" aria-label="Charts">
+      <i class="fa-solid fa-chart-bar"></i>
+    </button>
+  </nav>
+
+  <div id="toast" class="toast"></div>
+
+  <audio id="audioEngine" preload="metadata"></audio>
 
   <script>
-    const audio = document.getElementById('audioEngine');
-    const dock = document.getElementById('playerDock');
-    const dockPlay = document.getElementById('dockPlayBtn');
-    const dockProgress = document.getElementById('dockProgress');
-    
-    // API NUEVA: JIOSAAVN (Librería musical pública sin bloqueos de red)
-    const API_BASE = 'https://saavn.dev/api/search/songs?query=';
+    const audio = document.getElementById("audioEngine");
+    const playerDock = document.getElementById("playerDock");
+    const dockTitle = document.getElementById("dockTitle");
+    const dockArtist = document.getElementById("dockArtist");
+    const dockImg = document.getElementById("dockImg");
+    const dockPlayBtn = document.getElementById("dockPlayBtn");
+    const dockProgress = document.getElementById("dockProgress");
+    const trackList = document.getElementById("trackList");
+    const loader = document.getElementById("loader");
+    const searchInput = document.getElementById("searchInput");
+    const searchHelp = document.getElementById("searchHelp");
+
+    const ITUNES_API = "https://itunes.apple.com/search";
+
+    let currentTracks = [];
+    let currentTrackIndex = -1;
+    let requestCounter = 0;
+    let toastTimer = null;
+
+    function escapeXml(text) {
+      return String(text)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&apos;");
+    }
+
+    function fallbackArt(title = "PT34") {
+      const initials = title.trim().slice(0, 2).toUpperCase();
+
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+          <defs>
+            <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#080808"/>
+              <stop offset="100%" stop-color="#52218c"/>
+            </linearGradient>
+          </defs>
+          <rect width="600" height="600" rx="40" fill="url(#bg)"/>
+          <circle cx="300" cy="300" r="160" fill="none" stroke="#b388ff" stroke-width="18" opacity=".85"/>
+          <circle cx="300" cy="300" r="32" fill="#ffffff"/>
+          <text x="300" y="100" text-anchor="middle" fill="#ffffff" font-size="48" font-family="Arial" font-weight="700">PT34</text>
+          <text x="300" y="470" text-anchor="middle" fill="#ffffff" font-size="100" font-family="Arial" font-weight="900">${escapeXml(initials)}</text>
+        </svg>
+      `;
+
+      return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+    }
+
+    function safeArtwork(url, title) {
+      if (!url) return fallbackArt(title);
+
+      return url.replace("100x100bb", "600x600bb");
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+
+      clearTimeout(toastTimer);
+      toast.textContent = message;
+      toast.classList.add("show");
+
+      toastTimer = setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2500);
+    }
 
     function switchView(viewName) {
-      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      document.getElementById('view-' + viewName).classList.add('active');
-      event.currentTarget.classList.add('active');
-      window.scrollTo(0,0);
+      document.querySelectorAll(".view").forEach(view => {
+        view.classList.remove("active");
+      });
+
+      const selectedView = document.getElementById("view-" + viewName);
+      if (selectedView) selectedView.classList.add("active");
+
+      document.querySelectorAll(".nav-item").forEach(button => {
+        button.classList.toggle("active", button.dataset.view === viewName);
+      });
+
+      if (viewName === "library") renderFavorites();
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    function buscarDirecto(termino) {
-      document.getElementById('searchInput').value = termino;
-      switchView('search');
-      document.querySelectorAll('.nav-item')[1].classList.add('active'); 
-      document.querySelectorAll('.nav-item')[0].classList.remove('active');
-      searchMusic();
+    function openSearch(query = "") {
+      switchView("search");
+
+      searchInput.value = query;
+      searchInput.focus();
+
+      if (query.trim()) searchMusic();
     }
 
-    audio.addEventListener('timeupdate', () => {
-      if (audio.duration) dockProgress.style.width = ((audio.currentTime / audio.duration) * 100) + '%';
-    });
-
-    function togglePlay(e) {
-      if(e) e.stopPropagation();
-      audio.paused ? audio.play() : audio.pause();
+    function normalizeTrack(item) {
+      return {
+        id: String(item.trackId || item.collectionId || crypto.randomUUID()),
+        title: item.trackName || item.collectionName || "Sin título",
+        artist: item.artistName || "Artista desconocido",
+        album: item.collectionName || "Canción",
+        artwork: safeArtwork(item.artworkUrl100, item.trackName),
+        previewUrl: item.previewUrl || ""
+      };
     }
-
-    audio.addEventListener('play', () => dockPlay.className = 'fas fa-pause');
-    audio.addEventListener('pause', () => dockPlay.className = 'fas fa-play');
 
     async function searchMusic() {
-      const q = document.getElementById('searchInput').value;
-      if (!q) return;
-      document.getElementById('searchInput').blur();
-      document.getElementById('loader').style.display = 'block';
-      document.getElementById('trackList').innerHTML = '';
+      const query = searchInput.value.trim();
+
+      if (!query) {
+        trackList.innerHTML = "";
+        searchHelp.textContent = "Escribe una canción, álbum o artista para buscar.";
+        searchHelp.style.display = "block";
+        return;
+      }
+
+      const requestId = ++requestCounter;
+
+      loader.style.display = "block";
+      searchHelp.style.display = "none";
+      trackList.innerHTML = "";
 
       try {
-        const res = await fetch(API_BASE + encodeURIComponent(q));
-        const json = await res.json();
-        document.getElementById('loader').style.display = 'none';
-        
-        if (json.success && json.data.results.length > 0) {
-          json.data.results.forEach(item => {
-            // Escoger mejor calidad de imagen (500x500 si existe) y de audio (320kbps)
-            const img = item.image.pop().url;
-            const audioLink = item.downloadUrl.find(l => l.quality === '320kbps')?.url || item.downloadUrl[0].url;
-            const artist = item.artists.primary[0].name;
-            const titleEscaped = item.title.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-            const artistEscaped = artist.replace(/'/g, "\\'").replace(/"/g, '&quot;');
-            
-            const html = `
-              <div class="track-item" onclick="playSong('${audioLink}', '${titleEscaped}', '${artistEscaped}', '${img}')">
-                <div class="track-item-left">
-                  <img src="${img}" class="track-img">
-                  <div class="track-info">
-                    <div class="track-title">${item.title}</div>
-                    <div class="track-artist">${artist}</div>
-                  </div>
-                </div>
-                <i class="fas fa-play-circle" style="color:#000; font-size:24px; padding:5px;"></i>
-              </div>`;
-            document.getElementById('trackList').insertAdjacentHTML('beforeend', html);
-          });
-        } else {
-          document.getElementById('trackList').innerHTML = '<p style="text-align:center; padding:20px;">No se encontró nada.</p>';
+        const params = new URLSearchParams({
+          term: query,
+          country: "ES",
+          media: "music",
+          entity: "song",
+          limit: "30"
+        });
+
+        const response = await fetch(ITUNES_API + "?" + params.toString());
+
+        if (!response.ok) {
+          throw new Error("No se pudo contactar con el catálogo.");
         }
-      } catch (err) {
-        document.getElementById('loader').style.display = 'none';
-        document.getElementById('trackList').innerHTML = '<p style="text-align:center; color:red; padding:20px;">Error fatal. API saturada.</p>';
+
+        const data = await response.json();
+
+        if (requestId !== requestCounter) return;
+
+        currentTracks = (data.results || [])
+          .map(normalizeTrack)
+          .filter(track => track.previewUrl);
+
+        loader.style.display = "none";
+
+        if (!currentTracks.length) {
+          searchHelp.textContent = "No hay previews disponibles para esta búsqueda.";
+          searchHelp.style.display = "block";
+          return;
+        }
+
+        renderTracks();
+
+      } catch (error) {
+        if (requestId !== requestCounter) return;
+
+        loader.style.display = "none";
+        trackList.innerHTML = `
+          <div class="status-message error">
+            No se pudo cargar la búsqueda.<br>
+            Revisa tu conexión e inténtalo otra vez.
+          </div>
+        `;
       }
     }
 
-    function playSong(audioUrl, title, artist, thumb) {
-      document.getElementById('dockTitle').textContent = title;
-      document.getElementById('dockArtist').textContent = artist;
-      document.getElementById('dockImg').src = thumb;
-      dock.classList.remove('hidden');
-      dockPlay.className = 'fas fa-spinner fa-spin';
+    function renderTracks() {
+      trackList.innerHTML = "";
 
-      audio.src = audioUrl;
-      audio.play().catch(e => {
-        alert("Fallo al reproducir el enlace.");
-        dockPlay.className = 'fas fa-play';
+      currentTracks.forEach((track, index) => {
+        const item = document.createElement("button");
+        item.type = "button";
+        item.className = "track-item";
+
+        if (index === currentTrackIndex) {
+          item.classList.add("playing");
+        }
+
+        const left = document.createElement("div");
+        left.className = "track-item-left";
+
+        const img = document.createElement("img");
+        img.className = "track-img";
+        img.src = track.artwork;
+        img.alt = track.title;
+        img.onerror = () => {
+          img.onerror = null;
+          img.src = fallbackArt(track.title);
+        };
+
+        const info = document.createElement("div");
+        info.className = "track-info";
+
+        const title = document.createElement("div");
+        title.className = "track-title";
+        title.textContent = track.title;
+
+        const artist = document.createElement("div");
+        artist.className = "track-artist";
+        artist.textContent = track.artist + " · " + track.album;
+
+        const icon = document.createElement("i");
+        icon.className = "fa-solid fa-circle-play track-play-icon";
+
+        info.append(title, artist);
+        left.append(img, info);
+        item.append(left, icon);
+
+        item.addEventListener("click", () => {
+          playTrack(index);
+        });
+
+        trackList.appendChild(item);
       });
     }
+
+    function playTrack(index) {
+      const track = currentTracks[index];
+
+      if (!track || !track.previewUrl) {
+        showToast("Esta canción no tiene preview disponible.");
+        return;
+      }
+
+      currentTrackIndex = index;
+
+      dockTitle.textContent = track.title;
+      dockArtist.textContent = track.artist;
+      dockImg.src = track.artwork;
+      dockImg.onerror = () => {
+        dockImg.onerror = null;
+        dockImg.src = fallbackArt(track.title);
+      };
+
+      playerDock.classList.remove("hidden");
+      dockPlayBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+
+      audio.pause();
+      audio.src = track.previewUrl;
+      audio.load();
+
+      audio.play()
+        .then(() => {
+          renderTracks();
+        })
+        .catch(() => {
+          dockPlayBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+          showToast("No se pudo reproducir esta preview.");
+        });
+    }
+
+    function togglePlay() {
+      if (!audio.src) {
+        showToast("Selecciona una canción primero.");
+        return;
+      }
+
+      if (audio.paused) {
+        audio.play().catch(() => {
+          showToast("No se pudo reanudar el audio.");
+        });
+      } else {
+        audio.pause();
+      }
+    }
+
+    function playRelative(direction) {
+      if (!currentTracks.length) {
+        showToast("Busca música antes de usar los controles.");
+        return;
+      }
+
+      if (currentTrackIndex < 0) {
+        playTrack(0);
+        return;
+      }
+
+      const newIndex =
+        (currentTrackIndex + direction + currentTracks.length) % currentTracks.length;
+
+      playTrack(newIndex);
+    }
+
+    function getFavorites() {
+      try {
+        return JSON.parse(localStorage.getItem("pt34Favorites")) || [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveFavorites(list) {
+      localStorage.setItem("pt34Favorites", JSON.stringify(list));
+    }
+
+    function addFavorite(query) {
+      const favorites = getFavorites();
+
+      if (favorites.some(item => item.query === query)) {
+        showToast("Ya está guardado en Favoritos.");
+        return;
+      }
+
+      favorites.push({
+        query,
+        addedAt: Date.now()
+      });
+
+      saveFavorites(favorites);
+      showToast("Añadido a Favoritos.");
+    }
+
+    function removeFavorite(query) {
+      const filtered = getFavorites().filter(item => item.query !== query);
+      saveFavorites(filtered);
+      renderFavorites();
+      showToast("Eliminado de Favoritos.");
+    }
+
+    function renderFavorites() {
+      const list = document.getElementById("favoriteList");
+      const favorites = getFavorites();
+
+      list.innerHTML = "";
+
+      if (!favorites.length) {
+        list.innerHTML = `
+          <div class="empty-state">
+            Todavía no tienes favoritos.<br>
+            Pulsa el botón + en una tarjeta para guardarla.
+          </div>
+        `;
+        return;
+      }
+
+      favorites
+        .slice()
+        .reverse()
+        .forEach(favorite => {
+          const row = document.createElement("div");
+          row.className = "favorite-row";
+
+          const name = document.createElement("div");
+          name.className = "favorite-name";
+          name.textContent = favorite.query;
+
+          const actions = document.createElement("div");
+          actions.className = "favorite-actions";
+
+          const play = document.createElement("button");
+          play.type = "button";
+          play.className = "small-action";
+          play.innerHTML = '<i class="fa-solid fa-play"></i>';
+          play.addEventListener("click", () => openSearch(favorite.query));
+
+          const remove = document.createElement("button");
+          remove.type = "button";
+          remove.className = "small-action";
+          remove.innerHTML = '<i class="fa-solid fa-trash"></i>';
+          remove.addEventListener("click", () => removeFavorite(favorite.query));
+
+          actions.append(play, remove);
+          row.append(name, actions);
+          list.appendChild(row);
+        });
+    }
+
+    document.querySelectorAll(".nav-item").forEach(button => {
+      button.addEventListener("click", () => {
+        switchView(button.dataset.view);
+      });
+    });
+
+    document.querySelectorAll(".card").forEach(card => {
+      const query = card.dataset.query;
+
+      card.addEventListener("click", event => {
+        if (event.target.closest("button")) return;
+        openSearch(query);
+      });
+
+      const searchButton = card.querySelector(".search-card-btn");
+      if (searchButton) {
+        searchButton.addEventListener("click", event => {
+          event.stopPropagation();
+          openSearch(query);
+        });
+      }
+
+      const favoriteButton = card.querySelector(".add-favorite-btn");
+      if (favoriteButton) {
+        favoriteButton.addEventListener("click", event => {
+          event.stopPropagation();
+          addFavorite(query);
+        });
+      }
+    });
+
+    document.querySelectorAll("[data-explore]").forEach(button => {
+      button.addEventListener("click", () => {
+        openSearch(button.dataset.explore);
+      });
+    });
+
+    document.querySelectorAll(".static-art").forEach((img, index) => {
+      const title = img.alt || "PT34";
+      img.src = fallbackArt(title + index);
+      img.onerror = () => {
+        img.onerror = null;
+        img.src = fallbackArt(title);
+      };
+    });
+
+    searchInput.addEventListener("keydown", event => {
+      if (event.key === "Enter") {
+        searchMusic();
+      }
+    });
+
+    document.getElementById("dockPlayBtn").addEventListener("click", togglePlay);
+    document.getElementById("playerInfo").addEventListener("click", togglePlay);
+    document.getElementById("prevBtn").addEventListener("click", () => playRelative(-1));
+    document.getElementById("nextBtn").addEventListener("click", () => playRelative(1));
+
+    audio.addEventListener("play", () => {
+      dockPlayBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+    });
+
+    audio.addEventListener("pause", () => {
+      dockPlayBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+    });
+
+    audio.addEventListener("waiting", () => {
+      dockPlayBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i>';
+    });
+
+    audio.addEventListener("playing", () => {
+      dockPlayBtn.innerHTML = '<i class="fa-solid fa-pause"></i>';
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      if (!audio.duration || Number.isNaN(audio.duration)) return;
+
+      const percent = (audio.currentTime / audio.duration) * 100;
+      dockProgress.style.width = percent + "%";
+    });
+
+    audio.addEventListener("ended", () => {
+      playRelative(1);
+    });
+
+    audio.addEventListener("error", () => {
+      dockPlayBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
+      showToast("El audio no está disponible ahora.");
+    });
+
+    document.getElementById("deviceBtn").addEventListener("click", () => {
+      showToast("La conexión de dispositivos se añadirá desde Ajustes.");
+    });
+
+    document.getElementById("cameraBtn").addEventListener("click", () => {
+      showToast("Cámara preparada para futuras funciones.");
+    });
+
+    document.getElementById("settingsBtn").addEventListener("click", () => {
+      showToast("Ajustes de PT34 próximamente.");
+    });
   </script>
+
 </body>
 </html>
